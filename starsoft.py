@@ -38,8 +38,8 @@ def show_banner():
 ║              ADVANCED HELPER FOR MORE TASKS!             ║
 ║                    BY: f34ky | NN⁶² TEAM                 ║
 ╠══════════════════════════════════════════════════════════╣
-║  [1] Random Password      [5] Website Headers           ║
-║  [2] CPU and RAM Info      [6] IP Info                   ║
+║  [1] Random Password      [5] Website Headers            ║
+║  [2] CPU and RAM Info     [6] IP Info                    ║
 ║  [3] PING site            [7] Text to ASCII Art          ║
 ║  [4] Username Search      [8] Password Strength          ║
 ║  [0] Exit                                                ║
