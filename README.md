@@ -16,7 +16,7 @@ A multifunctional cybersecurity utility for OSINT username search and system tas
 ## Installation
 
 1. Clone the repository:
-   git clone https://github.com/34ky/StarSoft-Multi-Tool.git
+   git clone https://github.com/f34ky/StarSoft-Multi-Tool.git
    cd StarSoft-Multi-Tool
 
 2. Install dependencies:
