@@ -1,4 +1,3 @@
-New version: 2.51!
 
 # StarSoft Multi-Tool
 
