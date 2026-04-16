@@ -12,7 +12,6 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 if sys.platform == "win32":
     sys.stdout = open(sys.stdout.fileno(), mode='w', encoding='utf-8', buffering=1)
 
-
 # ========== STYLE FUNCTIONS ==========
 def print_header(title):
     border_top = "╔" + "═" * 48 + "╗"
@@ -21,14 +20,11 @@ def print_header(title):
     print(Colorate.Horizontal(Colors.cyan_to_blue, f"║{title.center(48)}║", 1))
     print(Colorate.Horizontal(Colors.blue_to_cyan, border_bottom, 1))
 
-
 def print_section(title):
     print(Colorate.Horizontal(Colors.cyan_to_blue, f"\n▰▰▰ {title} ▰▰▰", 1))
 
-
 def clear_screen():
     os.system('cls' if os.name == 'nt' else 'clear')
-
 
 def gradient_print(text, gradient=Colors.blue_to_cyan, delay=0.0001):
     """Быстрое градиентное появление текста"""
@@ -39,7 +35,6 @@ def gradient_print(text, gradient=Colors.blue_to_cyan, delay=0.0001):
         time.sleep(delay)
     print()
 
-
 def gradient_input(prompt, gradient=Colors.cyan_to_blue, delay=0.0001):
     """Быстрый градиентный ввод"""
     colored_prompt = Colorate.Horizontal(gradient, prompt, 1)
@@ -49,22 +44,17 @@ def gradient_input(prompt, gradient=Colors.cyan_to_blue, delay=0.0001):
         time.sleep(delay)
     return input()
 
-
 def success_print(text):
     gradient_print(text, Colors.green_to_cyan)
-
 
 def error_print(text):
     gradient_print(text, Colors.red_to_purple)
 
-
 def info_print(text):
     gradient_print(text, Colors.blue_to_cyan)
 
-
 def warning_print(text):
     gradient_print(text, Colors.yellow_to_red)
-
 
 # ========== MAIN BANNER ==========
 def show_banner():
@@ -74,21 +64,22 @@ def show_banner():
 ║              ADVANCED HELPER FOR MORE TASKS!             ║
 ║                    BY: f34ky | NN⁶² TEAM                 ║
 ╠══════════════════════════════════════════════════════════╣
-║  [1] Random Password      [4] Username Search            ║
-║  [2] CPU and RAM Info     [5] Website Headers            ║
-║  [3] PING site            [6] IP Info                    ║
+║  [1] Random Password      [5] Website Headers           ║
+║  [2] CPU and RAM Info     [6] IP Info                   ║
+║  [3] PING site            [7] Text to ASCII Art         ║
+║  [4] Username Search      [8] Password Strength         ║
 ║  [0] Exit                                                ║
 ╚══════════════════════════════════════════════════════════╝
 """
     print(Colorate.Horizontal(Colors.blue_to_cyan, banner, 1))
+    success_print("\n[✓] StarSoft v2.51 initialized successfully!")
     info_print("[✓] Interface upgraded with gradients and animations!\n")
-
 
 # ========== TOOL 1: RANDOM PASSWORD ==========
 def random_password():
     clear_screen()
     print_header("RANDOM PASSWORD GENERATOR")
-
+    
     try:
         length = int(gradient_input("\n└─$ Enter password length (8-32): "))
         if length < 8:
@@ -104,7 +95,7 @@ def random_password():
         print_section("RESULT")
         success_print(f"  ✓ Generated password: {password}")
         info_print(f"  📏 Length: {length} characters")
-
+        
         strength = "High" if length > 12 else "Medium"
         if length > 12:
             gradient_print(f"  🔒 Strength: {strength}", Colors.green_to_cyan)
@@ -122,47 +113,45 @@ def random_password():
 
     gradient_input("\n└─$ Press Enter to continue...")
 
-
 # ========== TOOL 2: SYSTEM INFO ==========
 def system_info():
     clear_screen()
     print_header("SYSTEM INFORMATION")
-
+    
     print_section("CPU")
     cpu_percent = psutil.cpu_percent(interval=1)
     cpu_count = psutil.cpu_count()
     cpu_freq = psutil.cpu_freq()
-
+    
     bar_length = int(cpu_percent / 4)
-    info_print(f"  Usage: [{'█' * bar_length}{'░' * (25 - bar_length)}] {cpu_percent}%")
+    info_print(f"  Usage: [{ '█' * bar_length}{'░' * (25 - bar_length)}] {cpu_percent}%")
     info_print(f"  Cores: {cpu_count}")
     if cpu_freq:
         info_print(f"  Frequency: {cpu_freq.current:.0f} MHz")
-
+    
     print_section("RAM")
     ram = psutil.virtual_memory()
     ram_used_gb = ram.used / (1024 ** 3)
     ram_total_gb = ram.total / (1024 ** 3)
     bar_length = int(ram.percent / 4)
-
+    
     info_print(f"  Used: {ram_used_gb:.1f} / {ram_total_gb:.1f} GB")
-    info_print(f"  Usage: [{'█' * bar_length}{'░' * (25 - bar_length)}] {ram.percent}%")
-
+    info_print(f"  Usage: [{ '█' * bar_length}{'░' * (25 - bar_length)}] {ram.percent}%")
+    
     gradient_input("\n└─$ Press Enter to continue...")
-
 
 # ========== TOOL 3: PING SITE ==========
 def ping_site():
     clear_screen()
     print_header("WEBSITE PINGER")
-
+    
     site = gradient_input("\n└─$ Enter website URL (e.g., google.com): ").strip()
     if not site.startswith("http"):
         site = "https://" + site
 
     print_section("CHECKING")
     info_print(f"  Checking {site}...")
-
+    
     try:
         start_time = time.time()
         response = requests.get(site, timeout=5)
@@ -183,7 +172,6 @@ def ping_site():
         error_print(f"  ✗ Error: {e}")
 
     gradient_input("\n└─$ Press Enter to continue...")
-
 
 # ========== TOOL 4: USERNAME SEARCH ==========
 
@@ -210,17 +198,16 @@ USERNAME_SITES = {
     "SoundCloud": "https://soundcloud.com/{}",
 }
 
-
 def check_username_site(site_name, url_template, username):
     url = url_template.format(username)
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'}
-
+    
     try:
         response = requests.get(url, headers=headers, timeout=5, allow_redirects=False)
-
+        
         if response.status_code == 404:
             return (site_name, url, False)
-
+        
         if response.status_code == 200:
             html_lower = response.text.lower()
             not_found_markers = [
@@ -232,49 +219,48 @@ def check_username_site(site_name, url_template, username):
                 if marker in html_lower:
                     return (site_name, url, False)
             return (site_name, url, True)
-
+        
         return (site_name, url, False)
     except Exception:
         return (site_name, url, False)
-
 
 def username_search():
     clear_screen()
     print_header("USERNAME SEARCH")
     info_print("  Search for accounts on 20+ platforms")
     info_print("  Supported: VK, GitHub, Telegram, YouTube, TikTok, and more!")
-
+    
     username = gradient_input("\n└─$ Enter username to search: ").strip()
     username = username.replace(" ", "").replace("@", "")
-
+    
     if not username:
         error_print("  ✗ Username not entered!")
         gradient_input("\n└─$ Press Enter to continue...")
         return
-
+    
     info_print(f"\n[*] Searching for '{username}' on {len(USERNAME_SITES)} sites...\n")
-
+    
     found_sites = []
     start_time = time.time()
-
+    
     with ThreadPoolExecutor(max_workers=15) as executor:
         futures = {}
         for site_name, url_template in USERNAME_SITES.items():
             future = executor.submit(check_username_site, site_name, url_template, username)
             futures[future] = site_name
-
+        
         for future in as_completed(futures):
             site_name, url, found = future.result()
             if found:
                 found_sites.append((site_name, url))
                 success_print(f"  ✓ {site_name}: FOUND -> {url}")
-
+    
     search_time = time.time() - start_time
-
+    
     print("\n" + "=" * 60)
     print(Colorate.Horizontal(Colors.blue_to_cyan, f"RESULTS FOR: {username}", 1))
     print("=" * 60)
-
+    
     if found_sites:
         success_print(f"\n[+] FOUND ON {len(found_sites)} SITES:\n")
         for site_name, url in found_sites:
@@ -282,11 +268,11 @@ def username_search():
             info_print(f"    {url}\n")
     else:
         warning_print(f"\n[-] No accounts found for '{username}'")
-
+    
     print("=" * 60)
     info_print(f"Total checked: {len(USERNAME_SITES)} | Found: {len(found_sites)} | Time: {search_time:.2f}s")
     print("=" * 60)
-
+    
     if found_sites:
         filename = f"{username}_results.txt"
         with open(filename, "w", encoding="utf-8") as f:
@@ -295,15 +281,14 @@ def username_search():
             for site_name, url in found_sites:
                 f.write(f"{site_name}: {url}\n")
         success_print(f"\n[+] Results saved to: {filename}")
-
+    
     gradient_input("\n└─$ Press Enter to continue...")
-
 
 # ========== TOOL 5: WEBSITE HEADERS ==========
 def website_headers():
     clear_screen()
     print_header("WEBSITE HEADERS")
-
+    
     site = gradient_input("\n└─$ Enter website URL: ").strip()
     if not site.startswith("http"):
         site = "https://" + site
@@ -321,12 +306,11 @@ def website_headers():
 
     gradient_input("\n└─$ Press Enter to continue...")
 
-
 # ========== TOOL 6: IP INFO ==========
 def ip_info():
     clear_screen()
     print_header("IP INFORMATION")
-
+    
     ip = gradient_input("\n└─$ Enter IP address (or leave empty for your IP): ").strip()
 
     if not ip:
@@ -358,14 +342,82 @@ def ip_info():
 
     gradient_input("\n└─$ Press Enter to continue...")
 
+# ========== TOOL 7: TEXT TO ASCII ART ==========
+def text_to_ascii():
+    clear_screen()
+    print_header("ASCII ART GENERATOR")
+    
+    text_input = gradient_input("\n└─$ Enter text: ")
+
+    print_section("BLOCK MODE")
+    block_result = ""
+    for char in text_input.upper():
+        if char.isalpha():
+            block_result += f"[{char}]"
+        else:
+            block_result += f" {char} "
+    info_print(f"  {block_result}")
+
+    gradient_input("\n└─$ Press Enter to continue...")
+
+# ========== TOOL 8: PASSWORD STRENGTH ==========
+def password_strength():
+    clear_screen()
+    print_header("PASSWORD STRENGTH CHECKER")
+    
+    password = gradient_input("\n└─$ Enter password to check: ")
+    
+    score = 0
+    feedback = []
+
+    if len(password) >= 8:
+        score += 1
+    else:
+        feedback.append("Too short (min. 8 characters)")
+
+    if any(c.isupper() for c in password):
+        score += 1
+    else:
+        feedback.append("Add uppercase letters")
+
+    if any(c.islower() for c in password):
+        score += 1
+    else:
+        feedback.append("Add lowercase letters")
+
+    if any(c.isdigit() for c in password):
+        score += 1
+    else:
+        feedback.append("Add numbers")
+
+    if any(c in "!@#$%^&*" for c in password):
+        score += 1
+    else:
+        feedback.append("Add special characters (!@#$%^&*)")
+
+    print_section("RESULT")
+    
+    if score == 5:
+        success_print(f"  Score: {score}/5 - VERY STRONG!")
+    elif score >= 3:
+        warning_print(f"  Score: {score}/5 - MEDIUM")
+    else:
+        error_print(f"  Score: {score}/5 - WEAK")
+
+    if feedback:
+        info_print("\n  Recommendations:")
+        for f in feedback:
+            warning_print(f"    - {f}")
+
+    gradient_input("\n└─$ Press Enter to continue...")
 
 # ========== MAIN MENU ==========
 def main():
     while True:
         clear_screen()
         show_banner()
-
-        choice = gradient_input("\n└─$ Choose tool (0-6): ").strip()
+        
+        choice = gradient_input("\n└─$ Choose tool (0-8): ").strip()
 
         if choice == '1':
             random_password()
@@ -379,13 +431,16 @@ def main():
             website_headers()
         elif choice == '6':
             ip_info()
+        elif choice == '7':
+            text_to_ascii()
+        elif choice == '8':
+            password_strength()
         elif choice == '0' or choice.lower() == 'exit':
             success_print("\n[+] Thanks for using StarSoft! Goodbye!\n")
             sys.exit()
         else:
-            error_print("  ✗ Invalid choice! Enter number 0-6")
+            error_print("  ✗ Invalid choice! Enter number 0-8")
             time.sleep(1.5)
-
 
 # ========== RUN ==========
 if __name__ == "__main__":
